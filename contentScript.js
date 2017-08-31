@@ -1,5 +1,5 @@
 var port = chrome.runtime.connect({
-    name: 'yanglu'
+    name: 'content'
 });
 
 port.onMessage.addListener(function (msg) {
@@ -18,6 +18,7 @@ port.onMessage.addListener(function (msg) {
             console.log('fail', err);
         })
 });
+
 
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
@@ -41,6 +42,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 };
 
+// jd
 var loop = function (cb, id) {
     var la = function () {
         setTimeout(function () {
@@ -72,11 +74,57 @@ if (window.location.href.includes('https://item.jd.com/13641493591.html')) {
     }, 1000)
 }
 
-if(window.location.href.includes('https://cart.jd.com/addToCart.html')) {
-    window.location.href = 'https://trade.jd.com/shopping/order/getOrderInfo.action?rid='+Math.random();
+if (window.location.href.includes('https://cart.jd.com/addToCart.html')) {
+    window.location.href = 'https://trade.jd.com/shopping/order/getOrderInfo.action?rid=' + Math.random();
 }
 
-if(window.location.href.includes('https://trade.jd.com/shopping/order/getOrderInfo.action?rid=')) {
+if (window.location.href.includes('https://trade.jd.com/shopping/order/getOrderInfo.action?rid=')) {
     $('#order-submit').click()
 }
 
+// torrentkitty
+if (window.location.href.includes('https://www.torrentkitty.tv/')) {
+    chrome.extension.onRequest.addListener(
+        function (request, sender, sendResponse) {
+            if (request.id === 'getMagnet') {
+                var magnet = $($('#archiveResult tr')[1]).find('a[rel="magnet"]').attr('href');
+                sendResponse(magnet);
+            }
+        });
+}
+
+// 115
+if (window.location.href.includes('https://115.com/')) {
+    window.onload = function () {
+            console.log(chrome.extension.onRequest.hasListeners());
+            chrome.extension.onRequest.addListener(
+                function (request, sender, sendResponse) {
+                    console.log(a, request);
+                    if (request.id === 'setMagnet') {
+                        var beforeVal = $('#js_offline_new_add').val();
+                        $('#js_offline_new_add').val(beforeVal + '\n' + request.data)
+                    }
+                });
+    }
+}
+
+//login
+if(window.location.href.includes('http://localhost:9000/login')) {
+    chrome.extension.onRequest.addListener(
+      function (request, sender, sendResponse) {
+          if (request.id === 'login') {
+              $.post('http://localhost:9000/api/login', {
+                   code: "123123",
+                   password: "a0dad820007b98b4ceef4a05ed63a5a0",
+                   username: "17682300821"
+               })
+               .done(function () {
+                   sendResponse('jump success');
+                   window.location.pathname = '/';
+               })
+               .fail(function (err) {
+                   console.log('fail', err);
+               })
+          }
+      });
+}

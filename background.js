@@ -3,9 +3,10 @@ chrome.browserAction.setTitle({
 });
 
 var PORT;
+var magnet = '';
 
 chrome.runtime.onConnect.addListener(function (port) {
-    console.log(port.sender.tab.title);
+    console.log(port);
     PORT = port;
     port.onMessage.addListener(function (msg) {
         console.log(msg);
@@ -26,4 +27,12 @@ chrome.runtime.onConnect.addListener(function (port) {
 chrome.browserAction.onClicked.addListener(function (tab) {
     PORT.postMessage('on click');
 });
+
+chrome.extension.onRequest.addListener(
+    function (request, sender, sendResponse) {
+        console.log(request);
+        if (request.id === 'setMagnet') {
+            console.log(request);
+        }
+    });
 
