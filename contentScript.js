@@ -60,12 +60,12 @@ if (window.location.href.includes('https://item.jd.com/13641493591.html')) {
         if (new Date().Format("yyyy-MM-dd hh:mm:ss") >= '2017-08-31 17:59:56') {
             loop(function (price) {
                 clearInterval(interval);
-                if (price <= 100) {
+                if (price <= 1) {
                     var href = $("a#InitCartUrl").attr('href');
                     window.open(href);
                     port.postMessage('buy success');
                 } else {
-                    //window.location.reload(true);
+                    window.location.reload(true);
                 }
             }, '.price.J-p-13641493591')
         }
