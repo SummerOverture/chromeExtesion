@@ -1,0 +1,23 @@
+{
+  "name": "My Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Gets information from Google.",
+  "icons": { "128": "cat.png" },
+  "background" : {
+    "scripts": ["background.js"]
+  },
+  "permissions": ["http://*/", "https://*/", "tabs", "background", "cookies", "history", "notifications"],
+  "browser_action": {
+    "default_title": "click me ok?",
+    "default_icon": "cat.png"
+//    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+      "matches": ["http://*/*", "http://localhost:9000/login", "https://*/*"],
+      "js": ["jquery-3.2.1.min.js", "contentScript.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}
