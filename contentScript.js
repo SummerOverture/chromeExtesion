@@ -6,17 +6,17 @@ port.onMessage.addListener(function (msg) {
     console.log('收到消息' + msg + '准备起飞');
 
     $.post('http://localhost:9000/api/login', {
-         code: "123123",
-         password: "a0dad820007b98b4ceef4a05ed63a5a0",
-         username: "17682300821"
-     })
-     .done(function () {
-         port.postMessage('jump success');
-         window.location.pathname = '/';
-     })
-     .fail(function (err) {
-         console.log('fail', err);
-     })
+        code: "123123",
+        password: "a0dad820007b98b4ceef4a05ed63a5a0",
+        username: "17682300821"
+    })
+        .done(function () {
+            port.postMessage('jump success');
+            window.location.pathname = '/';
+        })
+        .fail(function (err) {
+            console.log('fail', err);
+        })
 });
 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -44,9 +44,9 @@ Date.prototype.Format = function (fmt) { //author: meizz
 var loop = function (cb, id) {
     var la = function () {
         setTimeout(function () {
-            console.log(parseInt($(id).text().slice(1)));
-            if (parseInt($(id).text().slice(1))) {
-                cb(parseInt($(id).text().slice(1)));
+            console.log(parseInt($(id).text()));
+            if (parseInt($(id).text())) {
+                cb(parseInt($(id).text()));
             } else {
                 return la();
             }
@@ -57,9 +57,9 @@ var loop = function (cb, id) {
 
 if (window.location.href.includes('https://item.jd.com/13641493591.html')) {
     var interval = setInterval(function () {
-        if (new Date().Format("yyyy-MM-dd hh:mm:ss") >= '2017-08-31 17:59:56') {
+        if (new Date().Format("yyyy-MM-dd hh:mm:ss") >= '2017-08-31 19:59:56') {
+            clearInterval(interval);
             loop(function (price) {
-                clearInterval(interval);
                 if (price <= 1) {
                     var href = $("a#InitCartUrl").attr('href');
                     window.open(href);
@@ -71,3 +71,12 @@ if (window.location.href.includes('https://item.jd.com/13641493591.html')) {
         }
     }, 1000)
 }
+
+if(window.location.href.includes('https://cart.jd.com/addToCart.html')) {
+    window.location.href = 'https://trade.jd.com/shopping/order/getOrderInfo.action?rid='+Math.random();
+}
+
+if(window.location.href.includes('https://trade.jd.com/shopping/order/getOrderInfo.action?rid=')) {
+    $('#order-submit').click()
+}
+
