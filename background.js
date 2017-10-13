@@ -1,6 +1,6 @@
 chrome.browserAction.setTitle({
     title: '点击我 我会帮你发送登录请求（帐号为杨璐）'
-});
+});12
 
 var PORT;
 var magnet = '';
